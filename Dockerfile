@@ -16,10 +16,10 @@ RUN apt-get install -y nodejs postgresql postgresql-contrib
 RUN /etc/init.d/postgresql start && su -c "psql -c 'create user root;'" -s /bin/sh postgres && su -c "createdb hoshinplan_dev;" -s /bin/sh postgres
 
 #Clone hoshinplan master
-RUN git clone https://github.com/gabriprat/hoshinplan.git /opt/hoshinplan/
+RUN git clone https://github.com/gabriprat/hoshinplan.git/opt/hoshinplan/
 
 #Install gems
 RUN bundle install --gemfile=/opt/hoshinplan/Gemfile
 
-#Run server
+#Run postgreSQL, rails server and expose to all "*"
 CMD /etc/init.d/postgresql start; sleep 30; cd /opt/hoshinplan && rails s --binding=*
