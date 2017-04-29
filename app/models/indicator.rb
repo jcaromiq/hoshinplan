@@ -1,4 +1,4 @@
-class Indicator < ActiveRecord::Base
+class Indicator < ApplicationRecord
 
   acts_as_paranoid
 
@@ -39,7 +39,8 @@ class Indicator < ActiveRecord::Base
   has_many :indicator_events, -> { order :day }, :dependent => :destroy, :inverse_of => :indicator
   
   has_many :log, :class_name => "IndicatorLog", :inverse_of => :indicator
-  
+  has_many :indicator_comments, :inverse_of => :indicator
+
   belongs_to :company, :null => false
 
   belongs_to :objective, :inverse_of => :indicators, :null => false

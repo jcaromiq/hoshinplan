@@ -1,4 +1,7 @@
 es:
+  actions:
+    newer: Más nuevos
+    older: Más antiguos
   price_html: '%{value}%{currency}'
   loading: Cargando...
   saving: Guardando...
@@ -129,6 +132,8 @@ es:
     invalid_credit_card: Los detalles de la tarjeta de crédito eran inválidos. Por favor, revísalos y prueba otra vez.
     invitation_code_does_not_exist: El código de invitación proporcionado no es válido.
   hobo:
+    actions:
+      close: Cerrar
     area:
       child_models: '%{model} de hoshin plans hijos'
     actions:
@@ -193,6 +198,10 @@ es:
               taken: La dirección de email ya pertenece a otro usuario
               too_short: es demasiado corto
               blank: está vacío
+        billing_detail:
+          attributes:
+            country:
+              blank: está vacío
       messages:
         record_invalid: Registro incorrecto
       template:
@@ -243,7 +252,9 @@ es:
         firstName: Nombre
         lastName: Apellidos
         password: Contraseña
-        current_password: Contraseña Actual
+        current_password: Contraseña actual
+        new_password: Nueva contraseña
+        new_password_confirmation: Confirmación nueva contraseña
         password_confirmation: Confirmación Contraseña
         email_address: Email
         image: Imagen
@@ -402,7 +413,6 @@ es:
             resend_activation: Reenviar email de activación de usuario
       company:
         name: Escoge un nombre en función del grupo de gente que utilizará Hoshinplan.
-
   index:
     title: Haz que tu estrategia de negocio funcione
   user:
@@ -426,6 +436,9 @@ es:
       end_collaboration_confirm: ¿Estás seguro de que quieres dejar de colaborar con esta compañía?
       activation_mail_resent: El email de activación ha sido reenviado.
       already_active: Tu usuario ya estaba activo. Por favor inicia sesión.
+    tabs:
+      profile: Perfil
+      password: Contraseña
   hoshin:
     how_to_improve: ¿Cómo mejorar la salud de mi hoshinplan?
     finish_tutorial: Finalizar el tutorial
@@ -578,6 +591,12 @@ es:
       other: Hola, Te escribo porque eres administrador de nuestra cuenta de Hoshinplan, nos quedan %{count} días en el periodo de prueba y sólo los administradores pueden actualizar la suscripción. Gracias.
     expired_email_subject: Nuestro periodo de prueba de Hoshinplan ha terminado
     expired_email_body:  Hola, Te escribo porque eres administrador de nuestra cuenta de Hoshinplan, nuestro periodo de prueba ya ha terminado y sólo los administradores pueden actualizar la suscripción. Gracias.
+  comments:
+    ago: hace %{ago}
+    title: Comentarios
+    model_name:
+      singular: comentario
+      plural: comentarios
   read_only:
     heading: Solo tienes permiso de lectura
     ask_for_permission: Si necesitas permisos de edición puedes contactar con uno de los administradores de esta empresa.
@@ -729,3 +748,19 @@ es:
       month: Mes
       second: Segundos
       year: Año
+  will_paginate:
+    page_entries_info:
+      single_page:
+        zero:  "Ningún %{model} encontrado"
+        one:   "Mostrando 1 %{model}"
+        other: "Mostrando todos los %{count} %{model}"
+      single_page_html:
+        zero:  "Ningún %{model} encontrado"
+        one:   "Mostrando <b>1</b> %{model}"
+        other: "Mostrando <b>todos los&nbsp;%{count}</b> %{model}"
+      multi_page: "Mostrando %{model} %{from} - %{to} de %{count}"
+      multi_page_html: "Mostrando %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> de <b>%{count}</b>"
+  write_comment: Escribe un comentario...
+  country:
+    messages:
+      no_country: "(Seleccionar país)"

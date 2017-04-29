@@ -11,10 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804091413) do
+ActiveRecord::Schema.define(version: 20170422230552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "a", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.date    "trial_ends_at"
+  end
 
   create_table "areas", force: :cascade do |t|
     t.string   "name",        null: false
@@ -155,6 +160,7 @@ ActiveRecord::Schema.define(version: 20160804091413) do
     t.datetime "deleted_at"
     t.integer  "subscriptions_count",                         default: 0,     null: false
     t.decimal  "credit",              precision: 8, scale: 2, default: 0.0
+    t.date     "trial_ends_at"
   end
 
   add_index "companies", ["creator_id"], name: "index_companies_on_creator_id", using: :btree
@@ -203,6 +209,38 @@ ActiveRecord::Schema.define(version: 20160804091413) do
   end
 
   add_index "flipper_gates", ["flipper_feature_id", "name", "value"], name: "index_flipper_gates_on_flipper_feature_id_and_name_and_value", unique: true, using: :btree
+
+  create_table "generic_comments", force: :cascade do |t|
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "company_id",   null: false
+    t.integer  "creator_id"
+    t.integer  "hoshin_id"
+    t.integer  "area_id"
+    t.integer  "goal_id"
+    t.integer  "objective_id"
+    t.integer  "indicator_id"
+    t.string   "type"
+    t.integer  "task_id"
+  end
+
+  add_index "generic_comments", ["area_id", "created_at"], name: "index_generic_comments_on_area_id_and_created_at", using: :btree
+  add_index "generic_comments", ["area_id"], name: "index_generic_comments_on_area_id", using: :btree
+  add_index "generic_comments", ["company_id", "created_at"], name: "index_generic_comments_on_company_id_and_created_at", using: :btree
+  add_index "generic_comments", ["company_id"], name: "index_generic_comments_on_company_id", using: :btree
+  add_index "generic_comments", ["creator_id"], name: "index_generic_comments_on_creator_id", using: :btree
+  add_index "generic_comments", ["goal_id", "created_at"], name: "index_generic_comments_on_goal_id_and_created_at", using: :btree
+  add_index "generic_comments", ["goal_id"], name: "index_generic_comments_on_goal_id", using: :btree
+  add_index "generic_comments", ["hoshin_id", "created_at"], name: "index_generic_comments_on_hoshin_id_and_created_at", using: :btree
+  add_index "generic_comments", ["hoshin_id"], name: "index_generic_comments_on_hoshin_id", using: :btree
+  add_index "generic_comments", ["indicator_id", "created_at"], name: "index_generic_comments_on_indicator_id_and_created_at", using: :btree
+  add_index "generic_comments", ["indicator_id"], name: "index_generic_comments_on_indicator_id", using: :btree
+  add_index "generic_comments", ["objective_id", "created_at"], name: "index_generic_comments_on_objective_id_and_created_at", using: :btree
+  add_index "generic_comments", ["objective_id"], name: "index_generic_comments_on_objective_id", using: :btree
+  add_index "generic_comments", ["task_id", "created_at"], name: "index_generic_comments_on_task_id_and_created_at", using: :btree
+  add_index "generic_comments", ["task_id"], name: "index_generic_comments_on_task_id", using: :btree
+  add_index "generic_comments", ["type"], name: "index_generic_comments_on_type", using: :btree
 
   create_table "goals", force: :cascade do |t|
     t.string   "name",       null: false
@@ -430,6 +468,17 @@ ActiveRecord::Schema.define(version: 20160804091413) do
 
   add_index "paypal_buttons", ["product"], name: "index_paypal_buttons_on_product", unique: true, using: :btree
 
+  create_table "sage_ones", force: :cascade do |t|
+    t.string   "access_token"
+    t.datetime "expires_at"
+    t.string   "refresh_token"
+    t.string   "scopes"
+    t.string   "requested_by_id"
+    t.string   "resource_owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -564,6 +613,7 @@ ActiveRecord::Schema.define(version: 20160804091413) do
     t.string   "initial_task_state",                   default: "backlog",  null: false
     t.datetime "trial_ending_email"
     t.datetime "trial_ended_email"
+    t.integer  "companies_trial_days",                 default: 0
   end
 
   add_index "users", ["email_address"], name: "index_users_on_email_address", unique: true, using: :btree

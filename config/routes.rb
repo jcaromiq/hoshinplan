@@ -1,3 +1,5 @@
+require 'resque/server'
+
 class RedirectWww
   def matches?(request)
     request.subdomain.blank? && !request.path_info.start_with?('/health_check')
@@ -6,6 +8,7 @@ end
 
 Hoshinplan::Application.routes.draw do
   
+  apipie
   #adding www. to the beginning of any URL that doesn't already have it
   constraints RedirectWww.new do
     get ':any', to: redirect(subdomain: 'www', path: '/%{any}'), any: /.*/
@@ -32,6 +35,8 @@ Hoshinplan::Application.routes.draw do
   get 'search' => 'front#search', :as => 'site_search'
   
   get 'first' => 'front#first', :as => 'front_first'
+
+  get 'confirm-email' => 'front#confirm_email', :as => 'confirm_email'
 
   get 'health_check' => 'front#health_check', :as => 'health_check'
 
@@ -130,11 +135,17 @@ Hoshinplan::Application.routes.draw do
 
   post "/vat_validator/validate_vat" => "vat_validator#validate_vat"
 
+  post "/faye/auth" => "faye_auth#faye_auth", :as => 'faye_auth'
+
+  get "/sage_one/auth" => "sage_one#auth"
+
+  get "/sage_one/callback" => "sage_one#callback"
 
   SamlDynamicRouter.load unless Rails.env.development?
   
-  constraints CanAccessFlipperUI do
+  constraints IsAdministrator do
     mount Flipper::UI.app($flipper) => '/admin/flipper'
+    mount Resque::Server.new, :at => "/admin/resque"
   end
   
   # The priority is based upon order of creation:
